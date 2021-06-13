@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+{% block Body %}
+{% include 'navbar.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 m-5 p-5 text-center">
+            <h3>Welcome to Mad Libz</h3>
+            Provide the words against each hint and get ready to see a crazy version of a story
+        </div>
+        <form action="{% url 'main' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for x in clues %}
+            <div class="mb-3 mr-5 ml-5 pl-5 pr-5">
+                <label for="{{x}}" class="form-label">{{x|title}}</label>
+                <input type="text" class="form-control" id="{{x}}" name="{{x}}" required>
+            </div>
+            {% endfor %}
+            <input  type="number" class="d-none" name="numberOfStory" value="{{number}}">
+            <div class="mb-3 mr-5 ml-5 pl-5 pr-5">
+                <button type="submit" class="btn btn-primary btn-floating">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
