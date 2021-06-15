@@ -1,3 +1,3 @@
 import json
 
-A = json.load(open('data.json', 'r'))
+STORIES = json.load(open('data.json', 'r'))

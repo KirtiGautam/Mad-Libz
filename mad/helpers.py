@@ -1,11 +1,12 @@
-from django.http import request
-from mad.data import A
+from mad.data import STORIES
 
 def getKeys(number):
-    '''formatString is a format string with embedded dictionary keys.
-    Return a set containing all the keys from the format string.'''
+    """
+    Make set of keys to show to user as hints
+    :param number: number of story to select from 
+    """
 
-    formatString = A[str(number)]
+    formatString = STORIES[str(number)]
     keyList = list()
     end = 0
     repetitions = formatString.count('{')
@@ -17,38 +18,15 @@ def getKeys(number):
 
     return set(keyList)  # removes duplicates: no duplicates in a set
 
-
-def addPick(cue, dictionary):  # from madlib.py
-    '''Prompt for a user response using the cue string,
-    and place the cue-response pair in the dictionary.
-    '''
-    promptFormat = "Enter a specific example for {name}: "
-    # hint = cue.split('::')
-    # hint = '('.join([hint[0], a[hint[1]]]) + ')'
-
-    prompt = promptFormat.format(name=cue)
-    response = input(prompt)
-    dictionary[cue] = response
-
-
-def getUserPicks(cues):
-    '''Loop through the collection of cue keys and get user choices.
-    Return the resulting dictionary.
-    '''
-    userPicks = dict()
-    for cue in cues:
-        addPick(cue, userPicks)
-    return userPicks
-
-
-def tellStory(postdata):
-    '''storyFormat is a string with Python dictionary references embedded,
-    in the form {cue}.  Prompt the user for the mad lib substitutions
-    and then print the resulting story with the substitutions.
-    '''
+def tellStory(postData):
+    """
+    Take the data from as key: userChoice dictionary and 
+    format it to story
+    :param postData
+    """
     dic = {}
-    for x in postdata:
-        dic[x] = postdata[x]
-    story = A[dic['numberOfStory']].format(**dic)
+    for x in postData:
+        dic[x] = postData[x]
+    story = STORIES[dic['numberOfStory']].format(**dic)
     return story
     

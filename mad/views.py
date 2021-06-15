@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from mad import helpers, data
 import random
 
@@ -8,7 +8,7 @@ def home(request):
             'story': helpers.tellStory(request.POST)
         }
         return render(request, 'result.html', res)
-    rand = random.randint(1, len(data.A))
+    rand = random.randint(1, len(data.STORIES))
     resp = {
         'number': rand,
         'clues': helpers.getKeys(rand)
